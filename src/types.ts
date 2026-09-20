@@ -7,6 +7,8 @@ export interface FinancingPreset {
   downPaymentPct: number
   interestRatePct: number
   pointsPct: number
+  financeRenovation: boolean
+  renovationFinancedPct: number
 }
 
 export interface Comp {
@@ -23,6 +25,8 @@ export interface Financing {
   downPaymentPct: number
   interestRatePct: number
   pointsPct: number
+  financeRenovation: boolean
+  renovationFinancedPct: number
 }
 
 export interface Renovation {

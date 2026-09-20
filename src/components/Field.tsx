@@ -30,6 +30,30 @@ export function NumberField({ label, value, onChange, suffix, step = 1, min = 0,
   )
 }
 
+interface CheckboxFieldProps {
+  label: string
+  checked: boolean
+  onChange: (checked: boolean) => void
+  hint?: string
+}
+
+export function CheckboxField({ label, checked, onChange, hint }: CheckboxFieldProps) {
+  return (
+    <label className="flex flex-col gap-1 text-sm">
+      <span className="flex items-center gap-2 font-medium text-slate-700">
+        <input
+          type="checkbox"
+          className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+        />
+        {label}
+      </span>
+      {hint && <span className="text-xs text-slate-400">{hint}</span>}
+    </label>
+  )
+}
+
 interface SelectFieldProps<T extends string> {
   label: string
   value: T

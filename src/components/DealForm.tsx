@@ -1,6 +1,6 @@
 import { FINANCING_PRESETS, RENOVATION_RANGES, renovationMidpoint } from '../constants'
 import type { Deal, FinancingType, RenovationCategory } from '../types'
-import { Card, NumberField, SelectField, TextField } from './Field'
+import { Card, CheckboxField, NumberField, SelectField, TextField } from './Field'
 
 export function DealForm({ deal, onChange }: { deal: Deal; onChange: (deal: Deal) => void }) {
   function update<K extends keyof Deal>(key: K, value: Deal[K]) {
@@ -16,6 +16,8 @@ export function DealForm({ deal, onChange }: { deal: Deal; onChange: (deal: Deal
         downPaymentPct: preset.downPaymentPct,
         interestRatePct: preset.interestRatePct,
         pointsPct: preset.pointsPct,
+        financeRenovation: preset.financeRenovation,
+        renovationFinancedPct: preset.renovationFinancedPct,
       },
     })
   }
@@ -84,6 +86,22 @@ export function DealForm({ deal, onChange }: { deal: Deal; onChange: (deal: Deal
           suffix="%"
           step={0.1}
         />
+        <CheckboxField
+          label="מימון גם לשיפוץ"
+          checked={deal.financing.financeRenovation}
+          onChange={(checked) => update('financing', { ...deal.financing, financeRenovation: checked })}
+          hint="Hard Money ו-HELOC בדרך כלל מממנים גם שיפוץ (לרוב במשיכות לפי התקדמות); הלוואה קונבנציונלית לרוב לא"
+        />
+        {deal.financing.financeRenovation && (
+          <NumberField
+            label="אחוז מהשיפוץ הממומן בהלוואה"
+            value={deal.financing.renovationFinancedPct}
+            onChange={(v) => update('financing', { ...deal.financing, renovationFinancedPct: v })}
+            suffix="%"
+            step={5}
+            hint="השאר את היתרה (אם יש) תמומן מהכיס שלך"
+          />
+        )}
       </Card>
 
       <Card title="עלות שיפוץ" subtitle="בחר קטגוריית שיפוץ — כל קטגוריה מגיעה עם טווח עלות ל-מ״ר אופייני בארה״ב.">
