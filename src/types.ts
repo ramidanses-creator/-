@@ -1,69 +1,31 @@
-export type FinancingType = 'cash' | 'hardMoney' | 'conventional' | 'heloc'
-export type RenovationCategory = 'basic' | 'advanced' | 'premium'
-
-export interface FinancingPreset {
+export interface Expense {
+  id: string
   label: string
-  description: string
-  downPaymentPct: number
-  interestRatePct: number
-  pointsPct: number
-  financeRenovation: boolean
-  renovationFinancedPct: number
+  amount: number
 }
 
-export interface Comp {
+export interface Sale {
   id: string
-  address: string
-  soldPrice: number
-  sqft: number
-  soldDate: string
+  date: string
+  quantity: number
+  pricePerUnit: number
+}
+
+export interface Product {
+  id: string
+  name: string
+  quantityImported: number
+  expenses: Expense[]
+  sales: Sale[]
   notes: string
 }
 
-export interface Financing {
-  type: FinancingType
-  downPaymentPct: number
-  interestRatePct: number
-  pointsPct: number
-  financeRenovation: boolean
-  renovationFinancedPct: number
-}
-
-export interface Renovation {
-  category: RenovationCategory
-  customCostPerSqft: number | null
-}
-
-export interface Holding {
-  months: number
-  propertyTaxRatePct: number
-  insuranceMonthly: number
-  utilitiesMonthly: number
-  otherMonthly: number
-}
-
-export interface Selling {
-  agentCommissionPct: number
-  closingCostsPct: number
-  transferTaxPct: number
-}
-
-export interface Taxes {
-  estimatedTaxRatePct: number
-}
-
-export interface Deal {
-  id: string
-  name: string
-  purchasePrice: number
-  sqft: number
-  cashAvailable: number
-  purchaseClosingCostsPct: number
-  arvOverride: number | null
-  financing: Financing
-  renovation: Renovation
-  holding: Holding
-  selling: Selling
-  taxes: Taxes
-  comps: Comp[]
+export interface ProductTotals {
+  totalCost: number
+  costPerUnit: number
+  quantitySold: number
+  quantityRemaining: number
+  totalRevenue: number
+  totalProfit: number
+  profitPerUnit: number
 }
