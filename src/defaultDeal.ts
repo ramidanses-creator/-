@@ -16,6 +16,8 @@ export function createDefaultDeal(): Deal {
       downPaymentPct: preset.downPaymentPct,
       interestRatePct: preset.interestRatePct,
       pointsPct: preset.pointsPct,
+      financeRenovation: preset.financeRenovation,
+      renovationFinancedPct: preset.renovationFinancedPct,
     },
     renovation: {
       category: 'advanced',

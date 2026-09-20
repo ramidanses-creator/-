@@ -28,6 +28,12 @@ export function ResultsPanel({ results, cashAvailable }: { results: DealResults;
             <Row label="ממוצע $/מ״ר מעסקאות דומות" value={`$${results.compsAvgPricePerSqft.toFixed(0)}`} />
           )}
           <Row label="עלות שיפוץ" value={formatCurrency(results.renovationCost)} />
+          {results.renovationFinanced > 0 && (
+            <>
+              <Row label="מתוכה ממומן בהלוואה" value={formatCurrency(results.renovationFinanced)} />
+              <Row label="מתוכה מהכיס שלך" value={formatCurrency(results.renovationCash)} />
+            </>
+          )}
           <Row label="סה״כ עלות פרויקט (רכישה + שיפוץ)" value={formatCurrency(results.totalProjectCost)} />
           <Row label="עלויות מכירה (עמלת מתווך, סגירה, מס העברה)" value={formatCurrency(results.totalSellingCosts)} />
           <Row label="עלויות החזקה (ריבית, מיסים, ביטוח, שוטף)" value={formatCurrency(results.totalHoldingCosts)} />

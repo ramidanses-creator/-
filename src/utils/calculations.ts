@@ -7,6 +7,8 @@ export interface DealResults {
   compsAvgPricePerSqft: number | null
   renovationCostPerSqft: number
   renovationCost: number
+  renovationFinanced: number
+  renovationCash: number
   totalProjectCost: number
   financedAmount: number
   downPaymentAmount: number
@@ -54,8 +56,15 @@ export function calculateDeal(deal: Deal): DealResults {
 
   const totalProjectCost = deal.purchasePrice + renovationCost
 
-  const financedAmount = totalProjectCost * (1 - deal.financing.downPaymentPct / 100)
-  const downPaymentAmount = totalProjectCost - financedAmount
+  const purchaseFinanced = deal.purchasePrice * (1 - deal.financing.downPaymentPct / 100)
+  const purchaseDownPayment = deal.purchasePrice - purchaseFinanced
+  const renovationFinanced = deal.financing.financeRenovation
+    ? renovationCost * (deal.financing.renovationFinancedPct / 100)
+    : 0
+  const renovationCash = renovationCost - renovationFinanced
+
+  const financedAmount = purchaseFinanced + renovationFinanced
+  const downPaymentAmount = purchaseDownPayment + renovationCash
   const loanPoints = financedAmount * (deal.financing.pointsPct / 100)
   const purchaseClosingCosts = deal.purchasePrice * (deal.purchaseClosingCostsPct / 100)
 
@@ -97,6 +106,8 @@ export function calculateDeal(deal: Deal): DealResults {
     compsAvgPricePerSqft,
     renovationCostPerSqft,
     renovationCost,
+    renovationFinanced,
+    renovationCash,
     totalProjectCost,
     financedAmount,
     downPaymentAmount,
